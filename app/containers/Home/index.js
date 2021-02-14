@@ -5,6 +5,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 
 import dayjs from 'dayjs';
@@ -45,8 +46,9 @@ const Home = () => {
     }
   }, []);
   return (
-    <ScrollView keyboardShouldPersistTaps="always">
-      <SafeAreaView>
+    <SafeAreaView>
+
+      <ScrollView keyboardShouldPersistTaps="always">
         <View>
           <Text
             style={{
@@ -55,16 +57,19 @@ const Home = () => {
               fontSize: 24,
               fontWeight: 'bold',
               marginBottom: dimens.dim5,
+              marginTop: dimens.dim4
             }}
           >
             MY FITNESS DIARY
           </Text>
-          <Swiper showsPagination={false} loop={false} index={12} onIndexChanged={(i) => console.log(i)}>
-            {months.map((m) => <Month key={m} data={myData} setData={setMyData} month={dayjs().add(m, 'month').format('YYYY-MM')} />)}
+          <Swiper height={Dimensions.get('window').height + 400 } showsPagination={false} loop={false} index={12} onIndexChanged={(i) => console.log(i)}>
+            {months.map((m) =>
+              <Month key={m} data={myData} setData={setMyData} month={dayjs().add(m, 'month').format('YYYY-MM')} />
+            )}
           </Swiper>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

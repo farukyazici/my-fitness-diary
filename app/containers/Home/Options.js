@@ -36,7 +36,7 @@ const Options = ({
   return (
     <Modal visible={visible} transparent>
       <KeyboardAvoidingView
-        behavior="padding"
+        behavior="height"
         style={{
           flex: 1,
           backgroundColor: colors.semiTransparentBlack,
