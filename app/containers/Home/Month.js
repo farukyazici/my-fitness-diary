@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable react/prop-types */
+import { text } from '@fortawesome/fontawesome-svg-core';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import dayjs from 'dayjs';
 import React, { useState } from 'react';
@@ -18,8 +19,7 @@ const Month = ({ data, setData, month }) => {
   const [selectedDay, setSelectedDay] = useState(dayjs().format('YYYY-MM-DD'));
   const [daysInMonth, setDaysInMonth] = useState(dayjs().daysInMonth());
   return (
-    <View style={{ padding: 16 }}>
-      <Text>{month}</Text>
+    <View style={{ paddingHorizontal: 16, paddingBottom: 16 }}>
       {/* <Card>
   <CalendarList
   horizontal
@@ -248,7 +248,7 @@ const Month = ({ data, setData, month }) => {
         day={selectedDay}
         visible={modalOpen}
         data={data.find((d) => d.time === selectedDay)}
-        onSelect={(selectedOption, isCheat) => {
+        onSelect={(selectedOption, isCheat, text) => {
           setModalOpen(!modalOpen);
           console.log('selected day', JSON.stringify(selectedDay));
           console.log('selected option', selectedOption);
@@ -256,6 +256,7 @@ const Month = ({ data, setData, month }) => {
           updatedData.push({
             time: selectedDay,
             fulfillment: selectedOption,
+            note: text,
             isCheat,
           });
           setData(updatedData);

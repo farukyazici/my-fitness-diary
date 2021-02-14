@@ -45,10 +45,7 @@ const Home = () => {
     }
   }, []);
   return (
-    <ScrollView>
-      <TouchableOpacity onPress={b}>
-        <Text>ASSS</Text>
-      </TouchableOpacity>
+    <ScrollView keyboardShouldPersistTaps="always">
       <SafeAreaView>
         <View>
           <Text
@@ -62,7 +59,6 @@ const Home = () => {
           >
             MY FITNESS DIARY
           </Text>
-          <Text>{index}</Text>
           <Swiper showsPagination={false} loop={false} index={12} onIndexChanged={(i) => console.log(i)}>
             {months.map((m) => <Month key={m} data={myData} setData={setMyData} month={dayjs().add(m, 'month').format('YYYY-MM')} />)}
           </Swiper>

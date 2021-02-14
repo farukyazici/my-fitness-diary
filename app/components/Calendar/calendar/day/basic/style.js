@@ -45,7 +45,7 @@ export default function styleConstructor(theme = {}) {
       color: appStyle.selectedDayTextColor
     },
     disabledText: {
-      color: appStyle.textDisabledColor
+      color: colors.gray2
     },
     dot: {
       borderRadius: 2,

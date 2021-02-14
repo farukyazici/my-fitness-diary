@@ -1,18 +1,27 @@
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, {Component, Fragment} from 'react';
-import {TouchableOpacity, Text, View, Image, Dimensions} from 'react-native';
-import {shouldUpdate} from '../../../component-updater';
+import React, { Component, Fragment } from 'react';
+import {
+  TouchableOpacity, Text, View, Image, Dimensions,
+} from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import {
+  faTimes,
+  faTimesCircle,
+  faCheck,
+  faStickyNote,
+} from '@fortawesome/free-solid-svg-icons';
+import { shouldUpdate } from '../../../component-updater';
 import styleConstructor from './style';
 import Marking from '../marking';
-import {options} from '../../../../../data/options';
+import { options } from '../../../../../data/options';
 import { colors } from '../../../../../theme/colors';
 
 export default class BasicDay extends Component {
   static displayName = 'IGNORE';
 
   static propTypes = {
-    state: PropTypes.oneOf(['disabled', 'today', '']), //TODO: deprecate
+    state: PropTypes.oneOf(['disabled', 'today', '']), // TODO: deprecate
     /** The marking object */
     marking: PropTypes.any,
     /** Date marking style [simple/period/multi-dot/multi-period]. Default = 'simple' */
@@ -25,7 +34,7 @@ export default class BasicDay extends Component {
     onLongPress: PropTypes.func,
     /** The date to return from press callbacks */
     date: PropTypes.object,
-    /** Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates*/
+    /** Disable all touch events for disabled days. can be override with disableTouchEvent in markedDates */
     disableAllTouchEventsForDisabledDays: PropTypes.bool,
   };
 
@@ -68,15 +77,15 @@ export default class BasicDay extends Component {
   }
 
   shouldDisableTouchEvent() {
-    const {disableAllTouchEventsForDisabledDays} = this.props;
-    const {disableTouchEvent} = this.marking;
+    const { disableAllTouchEventsForDisabledDays } = this.props;
+    const { disableTouchEvent } = this.marking;
     let disableTouch = false;
 
     if (typeof disableTouchEvent === 'boolean') {
       disableTouch = disableTouchEvent;
     } else if (
-      typeof disableAllTouchEventsForDisabledDays === 'boolean' &&
-      this.isDisabled()
+      typeof disableAllTouchEventsForDisabledDays === 'boolean'
+      && this.isDisabled()
     ) {
       disableTouch = disableAllTouchEventsForDisabledDays;
     }
@@ -106,7 +115,7 @@ export default class BasicDay extends Component {
   }
 
   getContainerStyle() {
-    const {customStyles, selected, selectedColor} = this.props.marking;
+    const { customStyles, selected, selectedColor } = this.props.marking;
     const style = [
       this.style.base,
       {
@@ -119,13 +128,13 @@ export default class BasicDay extends Component {
     if (selected) {
       style.push(this.style.selected);
       if (selectedColor) {
-        style.push({backgroundColor: selectedColor});
+        style.push({ backgroundColor: selectedColor });
       }
     } else if (this.isToday()) {
       style.push(this.style.today);
     }
 
-    //Custom marking type
+    // Custom marking type
     if (this.isCustom() && customStyles && customStyles.container) {
       if (customStyles.container.borderRadius === undefined) {
         customStyles.container.borderRadius = 16;
@@ -137,13 +146,13 @@ export default class BasicDay extends Component {
   }
 
   getTextStyle() {
-    const {customStyles, selected, selectedTextColor} = this.props.marking;
+    const { customStyles, selected, selectedTextColor } = this.props.marking;
     const style = [this.style.text];
 
     if (selected) {
       style.push(this.style.selectedText);
       if (selectedTextColor) {
-        style.push({color: selectedTextColor});
+        style.push({ color: selectedTextColor });
       }
     } else if (this.isDisabled()) {
       style.push(this.style.disabledText);
@@ -151,7 +160,7 @@ export default class BasicDay extends Component {
       style.push(this.style.todayText);
     }
 
-    //Custom marking type
+    // Custom marking type
     if (this.isCustom() && customStyles && customStyles.text) {
       style.push(customStyles.text);
     }
@@ -160,8 +169,10 @@ export default class BasicDay extends Component {
   }
 
   renderMarking() {
-    const {theme, markingType} = this.props;
-    const {selected, marked, dotColor, dots, periods} = this.marking;
+    const { theme, markingType } = this.props;
+    const {
+      selected, marked, dotColor, dots, periods,
+    } = this.marking;
 
     return (
       <Marking
@@ -190,15 +201,15 @@ export default class BasicDay extends Component {
 
   renderContent() {
     return (
-      <Fragment>
+      <>
         {this.renderText()}
         {this.renderMarking()}
-      </Fragment>
+      </>
     );
   }
 
   renderContainer() {
-    const {activeOpacity} = this.marking;
+    const { activeOpacity } = this.marking;
 
     return (
       <TouchableOpacity
@@ -212,14 +223,23 @@ export default class BasicDay extends Component {
         }
         accessible
         accessibilityRole={this.isDisabled() ? undefined : 'button'}
-        accessibilityLabel={this.props.accessibilityLabel}>
+        accessibilityLabel={this.props.accessibilityLabel}
+      >
         {this.isMultiPeriod() ? this.renderText() : this.renderContent()}
         {this.props.option?.isCheat && (
           <Image
             source={require('../../../../../images/chocolade.png')}
-            style={{width: 16, height: 16, position: 'absolute', right: 2, top: 2}}
+            style={{
+              width: 16, height: 16, position: 'absolute', right: 2, top: 2,
+            }}
           />
         )}
+        {this.props.option?.note?.length > 0 && <FontAwesomeIcon
+          icon={faStickyNote}
+          color={colors.white1}
+          size={12}
+          style={{ position: 'absolute', left: 2, bottom: 2 }}
+        />}
       </TouchableOpacity>
     );
   }
