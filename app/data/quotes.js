@@ -1,5 +1,4 @@
 export const quotes = [
-  'Allah bizi Errkek adam yaratmış! Neden yaratmış? Bunlar için. Hiç söylenmeye, whining etmeye gerek yok!',
   'Your body can stand almost anything. It’s your mind that you have to convince.',
   'You are nothing else but what you make of yourself.',
   'Beast is what I become each and every time I step through those gym doors.',
